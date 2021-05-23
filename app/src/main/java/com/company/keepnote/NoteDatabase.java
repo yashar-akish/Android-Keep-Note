@@ -29,7 +29,9 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     NoteDatabase.class,
                     "note_database"
-            ).fallbackToDestructiveMigration().addCallback(roomCallback).build();
+            ).fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
+                    .build();
         }
 
         return instance;
