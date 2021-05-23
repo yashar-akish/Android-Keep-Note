@@ -1,6 +1,7 @@
 package com.company.keepnote;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -51,10 +52,24 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.top_menu:
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            String title = data.getStringExtra("noteTitle");
+            String description = data.getStringExtra("noteDescription");
+
+            Note note = new Note(title,description);
+            noteViewModel.insert(note);
+        }
+
     }
 }

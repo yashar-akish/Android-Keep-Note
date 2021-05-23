@@ -1,5 +1,6 @@
 package com.company.keepnote;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,9 +41,15 @@ public class AddNoteActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void saveNote() {
+
         String noteTitle = titleET.getText().toString();
         String noteDescription = descriptionET.getText().toString();
 
+        Intent i = new Intent();
+        i.putExtra("noteTitle", noteTitle);
+        i.putExtra("noteDescription", noteDescription);
 
+        setResult(RESULT_OK, i);
+        finish();
     }
 }
