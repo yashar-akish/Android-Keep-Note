@@ -42,6 +42,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         return notes.size();
     }
 
+    public Note getNotes(int position) {
+        return notes.get(position);
+    }
+
     class NoteHolder extends RecyclerView.ViewHolder {
 
         TextView titleTV, descriptionTv;
