@@ -54,6 +54,18 @@ public class MainActivity extends AppCompatActivity {
                 noteViewModel.delete(adapter.getNotes(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+
+                Intent intent = new Intent(MainActivity.this,UpdateActivity.class);
+                intent.putExtra("id", note.getId());
+                intent.putExtra("title", note.getTitle());
+                intent.putExtra("description", note.getDescription());
+                startActivityForResult(intent, 2);
+            }
+        });
     }
 
     @Override
@@ -84,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
 
             Note note = new Note(title,description);
             noteViewModel.insert(note);
+
+        }else if (requestCode == 2 && resultCode == RESULT_OK){
+            String title = data.getStringExtra("titleLast");
+            String description = data.getStringExtra("descriptionLast");
+            int id = data.getIntExtra("noteId", -1);
+
+            Note note = new Note(title, description);
+            note.setId(id);
+            noteViewModel.update(note);
         }
 
     }
